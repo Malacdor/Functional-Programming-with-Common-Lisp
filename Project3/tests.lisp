@@ -303,6 +303,16 @@
 (test-case (get-student-courses *students-2* 201) (3 1 5))
 (test-case (get-student-courses *students-2* 203) (7))
 (test-unchanged (get-student-courses *students* 101))
+
+(test-section "student-average")
+(test-case (student-average *students* 101) 253/3)
+(test-case (student-average *students* 102) 90)
+(test-case (student-average *students* 103) 85)
+(test-case (student-average *students* 104) 165/2)
+(test-case (student-average *students-2* 201) 80)
+(test-case (student-average *students-2* 202) 80)
+(test-case (student-average *students-2* 203) 50)
+(test-unchanged (student-average *students* 101))
 ;;;; Prints the final pass and fail count, so this file must stay last
 
 (print-test-summary)

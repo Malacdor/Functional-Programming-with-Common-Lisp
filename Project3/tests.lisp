@@ -351,6 +351,8 @@
 (test-case (common-courses *students-2* 201 202) (1 5))
 (test-case (common-courses *students-2* 202 201) (5 1))
 (test-case (common-courses *students-2* 201 203) nil)
+;; even if a course got listed twice by mistake, the result has no duplicates
+(test-case (common-courses '((301 (1 90) (2 80) (1 70)) (302 (1 60) (2 50))) 301 302) (1 2))
 (test-unchanged (common-courses *students* 101 104))
 ;;;; Prints the final pass and fail count, so this file must stay last
 

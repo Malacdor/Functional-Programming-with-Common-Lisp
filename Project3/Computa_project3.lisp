@@ -191,8 +191,10 @@
   (let ((entries (cdr (find-student students student-id))))
     (/ (grade-sum entries) (length entries))))
 
-;; Course lists are sets, so set-intersection from Section 3 does the work.
-;; It keeps the first student's order and never adds duplicates.
+;; Course lists are sets, so set-intersection from Section 3 does the work
+;; and keeps the first student's order. set-intersection only avoids
+;; duplicates if its first list has none, so list-remove-duplicates from
+;; Section 5 makes sure of that first.
 (defun common-courses (students student-1 student-2)
-  (set-intersection (get-student-courses students student-1)
+  (set-intersection (list-remove-duplicates (get-student-courses students student-1))
                     (get-student-courses students student-2)))

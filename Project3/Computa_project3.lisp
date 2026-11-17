@@ -128,6 +128,28 @@
   (equal lst (list-reverse lst)))
 ;;;; Section 6: Merge Sort
 ;;;; Functions: merge-sort, plus helper functions for splitting and merging
+
+;; Splits a list into two halves by dealing the elements out like cards:
+;; 1st, 3rd, 5th ... go left and 2nd, 4th, 6th ... go right.
+;; Returns (left right). Doing it this way means we don't need to divide
+;; the length, which would need FLOOR (not on the allowed list).
+(defun merge-sort-split (lst)
+  (if (or (not lst) (not (cdr lst)))
+      (list lst nil)
+      (let ((rest (merge-sort-split (cdr (cdr lst)))))
+        (list (cons (first lst) (first rest))
+              (cons (second lst) (second rest))))))
+
+;; Merges two already sorted lists into one sorted list.
+;; Only takes from b when it really comes before a, so equal
+;; elements keep their order and duplicates are never dropped.
+(defun merge-sort-merge (a b predicate)
+  (cond ((not a) b)
+        ((not b) a)
+        ((funcall predicate (first b) (first a))
+         (cons (first b) (merge-sort-merge a (cdr b) predicate)))
+        (t (cons (first a) (merge-sort-merge (cdr a) b predicate)))))
+
 ;;;; Sections 7 and 8: Student Course Analyzer and Application Integration
 ;;;; Functions: get-student-courses, student-average, common-courses
 

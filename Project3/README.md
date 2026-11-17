@@ -46,6 +46,8 @@ Later sections build on earlier ones instead of repeating code:
 - The set functions are used all over. `set-member` drives the other set
   operations, `set-diff` is used by `list-remove-duplicates`, and
   `set-intersection` is used by `common-courses`.
+- `list-remove-duplicates` is used by `common-courses` so the result never
+  has duplicates, even if a course was listed twice.
 - `set-join` (our replacement for APPEND) is used by `set-union`,
   `set-symmetric-diff` and `list-flatten`.
 - `list-reverse` is used by `list-palindrome`.
@@ -108,7 +110,7 @@ middle, because cutting at the middle needs FLOOR, which isn't on the allowed li
 |---|---|
 | `get-student-courses` | The course ids for one student, or NIL if they don't exist |
 | `student-average` | Sum of grades divided by number of courses (exact, like 253/3) |
-| `common-courses` | Courses two students share, using `set-intersection` |
+| `common-courses` | Courses two students share, using `set-intersection` and `list-remove-duplicates` |
 | `find-student`, `course-ids`, `grade-sum` (helpers) | Find a record, pull out course ids, add up grades |
 
 ## Known limitations

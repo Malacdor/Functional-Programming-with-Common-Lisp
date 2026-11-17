@@ -55,8 +55,12 @@
         ((equal (first exp) 'iff)
          (boolean-iff (boolean-eval (second exp)) (boolean-eval (third exp))))))
 
+;; ATOM is only allowed inside list-flatten, so we reuse list-flatten here.
+;; Flattening (list exp) gives back (exp) only when exp is a single symbol.
+;; NIL is checked first since list-flatten drops empty lists.
 (defun boolean-atom-p (exp)
-  (atom exp))
+  (or (not exp)
+      (equal (list-flatten (list exp)) (list exp))))
 
 (defun boolean-simplify-not (x)
   (if (and (not (boolean-atom-p x)) (equal (first x) 'not))

@@ -313,6 +313,20 @@
 (test-case (student-average *students-2* 202) 80)
 (test-case (student-average *students-2* 203) 50)
 (test-unchanged (student-average *students* 101))
+
+(test-section "common-courses")
+(test-case (common-courses *students* 101 104) (1 2))
+(test-case (common-courses *students* 102 103) (3))
+(test-case (common-courses *students* 102 104) (1))
+(test-case (common-courses *students* 104 101) (1 2))
+(test-case (common-courses *students* 103 104) (2))
+(test-case (common-courses *students* 101 101) (1 2 3))
+(test-case (common-courses *students* 101 999) nil)
+(test-case (common-courses *students* 999 101) nil)
+(test-case (common-courses *students-2* 201 202) (1 5))
+(test-case (common-courses *students-2* 202 201) (5 1))
+(test-case (common-courses *students-2* 201 203) nil)
+(test-unchanged (common-courses *students* 101 104))
 ;;;; Prints the final pass and fail count, so this file must stay last
 
 (print-test-summary)

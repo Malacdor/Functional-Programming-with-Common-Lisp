@@ -157,3 +157,9 @@
 (defun student-average (students student-id)
   (let ((entries (cdr (find-student students student-id))))
     (/ (grade-sum entries) (length entries))))
+
+;; Course lists are sets, so set-intersection from Section 3 does the work.
+;; It keeps the first student's order and never adds duplicates.
+(defun common-courses (students student-1 student-2)
+  (set-intersection (get-student-courses students student-1)
+                    (get-student-courses students student-2)))

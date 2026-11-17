@@ -150,6 +150,17 @@
          (cons (first b) (merge-sort-merge a (cdr b) predicate)))
         (t (cons (first a) (merge-sort-merge (cdr a) b predicate)))))
 
+;; Divide and conquer: lists with 0 or 1 elements are already sorted.
+;; Otherwise split, sort each half recursively, then merge them back.
+;; Pass #'< for ascending or #'> for descending.
+(defun merge-sort (lst predicate)
+  (if (or (not lst) (not (cdr lst)))
+      lst
+      (let ((halves (merge-sort-split lst)))
+        (merge-sort-merge (merge-sort (first halves) predicate)
+                          (merge-sort (second halves) predicate)
+                          predicate))))
+
 ;;;; Sections 7 and 8: Student Course Analyzer and Application Integration
 ;;;; Functions: get-student-courses, student-average, common-courses
 

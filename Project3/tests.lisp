@@ -276,6 +276,31 @@
 (test-case (list-palindrome '((1 2) 3 (2 1))) nil)
 (test-unchanged (list-palindrome '(1 2 3 2 1)))
 ;;;; Tests for Section 6: Merge Sort
+
+(test-section "Section 6: Merge Sort")
+
+(test-section "merge-sort")
+(test-case (merge-sort '(2 1 5 0) #'<) (0 1 2 5))
+(test-case (merge-sort '(2 1 5 0) #'>) (5 2 1 0))
+(test-case (merge-sort '(3 1 3 2) #'<) (1 2 3 3))
+(test-case (merge-sort '() #'<) nil)
+(test-case (merge-sort '(7) #'<) (7))
+(test-case (merge-sort '(2 1) #'<) (1 2))
+(test-case (merge-sort '(1 2 3 4 5) #'<) (1 2 3 4 5))
+(test-case (merge-sort '(5 4 3 2 1) #'<) (1 2 3 4 5))
+(test-case (merge-sort '(1 2 3 4 5) #'>) (5 4 3 2 1))
+(test-case (merge-sort '(4 4 4) #'<) (4 4 4))
+(test-case (merge-sort '(3 1 3 2) #'>) (3 3 2 1))
+(test-case (merge-sort '(5 1 4 1 5 9 2 6 5 3) #'<) (1 1 2 3 4 5 5 5 6 9))
+(test-case (merge-sort '(-3 7 0 -10 2) #'<) (-10 -3 0 2 7))
+(test-case (merge-sort '(1/2 1/3 1 0) #'<) (0 1/3 1/2 1))
+(test-case (merge-sort '(2 1 5 0) #'<=) (0 1 2 5))
+;; custom predicate: sort (course-id grade) pairs by grade
+(test-case (merge-sort '((1 85) (2 90) (3 78))
+                       (lambda (a b) (< (second a) (second b))))
+           ((3 78) (1 85) (2 90)))
+(test-unchanged (merge-sort '(2 1 5 0) #'<))
+(test-unchanged (merge-sort '(3 1 3 2) #'>))
 ;;;; Tests for Section 7: Student Course Analyzer
 
 (test-section "Section 7: Student Course Analyzer")

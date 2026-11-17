@@ -277,6 +277,32 @@
 (test-unchanged (list-palindrome '(1 2 3 2 1)))
 ;;;; Tests for Section 6: Merge Sort
 ;;;; Tests for Section 7: Student Course Analyzer
+
+(test-section "Section 7: Student Course Analyzer")
+
+;; dataset from the project handout
+(defparameter *students*
+  '((101 (1 85) (2 90) (3 78))
+    (102 (1 92) (3 88))
+    (103 (2 75) (3 95))
+    (104 (1 80) (2 85))))
+
+;; extra dataset where course order differs between students
+(defparameter *students-2*
+  '((201 (3 90) (1 80) (5 70))
+    (202 (5 60) (1 100))
+    (203 (7 50))))
+
+(test-section "get-student-courses")
+(test-case (get-student-courses *students* 101) (1 2 3))
+(test-case (get-student-courses *students* 102) (1 3))
+(test-case (get-student-courses *students* 103) (2 3))
+(test-case (get-student-courses *students* 104) (1 2))
+(test-case (get-student-courses *students* 999) nil)
+(test-case (get-student-courses '() 101) nil)
+(test-case (get-student-courses *students-2* 201) (3 1 5))
+(test-case (get-student-courses *students-2* 203) (7))
+(test-unchanged (get-student-courses *students* 101))
 ;;;; Prints the final pass and fail count, so this file must stay last
 
 (print-test-summary)

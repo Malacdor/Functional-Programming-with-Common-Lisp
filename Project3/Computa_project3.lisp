@@ -130,3 +130,19 @@
 ;;;; Functions: merge-sort, plus helper functions for splitting and merging
 ;;;; Sections 7 and 8: Student Course Analyzer and Application Integration
 ;;;; Functions: get-student-courses, student-average, common-courses
+
+;; A student record looks like (student-id (course-id grade) ...)
+;; Returns the whole record for student-id, or NIL if they aren't in the list.
+(defun find-student (students student-id)
+  (cond ((not students) nil)
+        ((equal (first (first students)) student-id) (first students))
+        (t (find-student (cdr students) student-id))))
+
+;; Takes the (course-id grade) pairs and keeps just the course ids.
+(defun course-ids (entries)
+  (if (not entries)
+      nil
+      (cons (first (first entries)) (course-ids (cdr entries)))))
+
+(defun get-student-courses (students student-id)
+  (course-ids (cdr (find-student students student-id))))

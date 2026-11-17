@@ -277,6 +277,56 @@
 (test-unchanged (list-palindrome '(1 2 3 2 1)))
 ;;;; Tests for Section 6: Merge Sort
 ;;;; Tests for Section 7: Student Course Analyzer
+
+(test-section "Section 7: Student Course Analyzer")
+
+;; dataset from the project handout
+(defparameter *students*
+  '((101 (1 85) (2 90) (3 78))
+    (102 (1 92) (3 88))
+    (103 (2 75) (3 95))
+    (104 (1 80) (2 85))))
+
+;; extra dataset where course order differs between students
+(defparameter *students-2*
+  '((201 (3 90) (1 80) (5 70))
+    (202 (5 60) (1 100))
+    (203 (7 50))))
+
+(test-section "get-student-courses")
+(test-case (get-student-courses *students* 101) (1 2 3))
+(test-case (get-student-courses *students* 102) (1 3))
+(test-case (get-student-courses *students* 103) (2 3))
+(test-case (get-student-courses *students* 104) (1 2))
+(test-case (get-student-courses *students* 999) nil)
+(test-case (get-student-courses '() 101) nil)
+(test-case (get-student-courses *students-2* 201) (3 1 5))
+(test-case (get-student-courses *students-2* 203) (7))
+(test-unchanged (get-student-courses *students* 101))
+
+(test-section "student-average")
+(test-case (student-average *students* 101) 253/3)
+(test-case (student-average *students* 102) 90)
+(test-case (student-average *students* 103) 85)
+(test-case (student-average *students* 104) 165/2)
+(test-case (student-average *students-2* 201) 80)
+(test-case (student-average *students-2* 202) 80)
+(test-case (student-average *students-2* 203) 50)
+(test-unchanged (student-average *students* 101))
+
+(test-section "common-courses")
+(test-case (common-courses *students* 101 104) (1 2))
+(test-case (common-courses *students* 102 103) (3))
+(test-case (common-courses *students* 102 104) (1))
+(test-case (common-courses *students* 104 101) (1 2))
+(test-case (common-courses *students* 103 104) (2))
+(test-case (common-courses *students* 101 101) (1 2 3))
+(test-case (common-courses *students* 101 999) nil)
+(test-case (common-courses *students* 999 101) nil)
+(test-case (common-courses *students-2* 201 202) (1 5))
+(test-case (common-courses *students-2* 202 201) (5 1))
+(test-case (common-courses *students-2* 201 203) nil)
+(test-unchanged (common-courses *students* 101 104))
 ;;;; Prints the final pass and fail count, so this file must stay last
 
 (print-test-summary)

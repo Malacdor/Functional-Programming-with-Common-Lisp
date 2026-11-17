@@ -130,3 +130,36 @@
 ;;;; Functions: merge-sort, plus helper functions for splitting and merging
 ;;;; Sections 7 and 8: Student Course Analyzer and Application Integration
 ;;;; Functions: get-student-courses, student-average, common-courses
+
+;; A student record looks like (student-id (course-id grade) ...)
+;; Returns the whole record for student-id, or NIL if they aren't in the list.
+(defun find-student (students student-id)
+  (cond ((not students) nil)
+        ((equal (first (first students)) student-id) (first students))
+        (t (find-student (cdr students) student-id))))
+
+;; Takes the (course-id grade) pairs and keeps just the course ids.
+(defun course-ids (entries)
+  (if (not entries)
+      nil
+      (cons (first (first entries)) (course-ids (cdr entries)))))
+
+(defun get-student-courses (students student-id)
+  (course-ids (cdr (find-student students student-id))))
+
+;; Adds up the grades in the (course-id grade) pairs.
+(defun grade-sum (entries)
+  (if (not entries)
+      0
+      (+ (second (first entries)) (grade-sum (cdr entries)))))
+
+;; Sum of grades / number of courses. Left as an exact fraction like 253/3.
+(defun student-average (students student-id)
+  (let ((entries (cdr (find-student students student-id))))
+    (/ (grade-sum entries) (length entries))))
+
+;; Course lists are sets, so set-intersection from Section 3 does the work.
+;; It keeps the first student's order and never adds duplicates.
+(defun common-courses (students student-1 student-2)
+  (set-intersection (get-student-courses students student-1)
+                    (get-student-courses students student-2)))

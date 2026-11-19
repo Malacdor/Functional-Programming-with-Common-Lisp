@@ -29,6 +29,27 @@ To try the functions yourself, start `sbcl` from the `Project3` folder and load 
 (boolean-simplify '(and (or a nil) t)) ; => A
 ```
 
+## Demo
+
+For the presentation we have a menu in `demo.lisp` at the top of the repo
+(outside this folder). Run it from the repo root:
+
+```
+sbcl --script demo.lisp
+```
+
+It walks through each section with the handout examples (or your own input),
+ranks the students by average with `merge-sort`, shows the recursion step by
+step using TRACE, and can run the whole test suite. It only calls the functions
+in `Computa_project3.lisp`.
+
+If SBCL is blocked on Windows (Smart App Control stops unsigned programs), the
+same thing works through Docker from the repo root:
+
+```
+docker run -it --rm -v "${PWD}:/app" -w /app clfoundation/sbcl sbcl --script demo.lisp
+```
+
 ## Files
 
 ```
